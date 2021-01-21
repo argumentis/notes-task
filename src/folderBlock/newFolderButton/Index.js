@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import { connect } from 'react-redux'
-import { setFolder } from '../../reducersFolder/mainReducer';
+import { setFolder } from '../../reducersFolder/mainReducer'
 import { arrPusher } from './helper'
 import _ from 'lodash'
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold',
     width: '100%'
   }
-}));
+}))
 
 const mapStateToProps = store => {
   const { foldersList } = store.main
@@ -26,17 +26,17 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setFolderAction: foldersList => dispatch(setFolder(foldersList)),
+    setFolderAction: foldersList => dispatch(setFolder(foldersList))
   }
 }
 
-function IconLabelButtons(props) {
+function IconLabelButtons (props) {
   const classes = useStyles()
   const { foldersList, setFolderAction } = props
   const newData = _.cloneDeep(foldersList)
 
   const handleButtonClick = () => {
-    setFolderAction(arrPusher( newData ))
+    setFolderAction(arrPusher(newData))
   }
 
   return (
@@ -49,7 +49,7 @@ function IconLabelButtons(props) {
         New Folder
       </Button>
     </div>
-  );
+  )
 }
 
 export default connect(

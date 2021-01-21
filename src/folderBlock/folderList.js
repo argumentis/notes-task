@@ -5,65 +5,55 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import TextField from '@material-ui/core/TextField'
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
-import { setFolder, setFolderId} from '../reducersFolder/mainReducer'
+import { setFolder, setFolderId, setPosFolderMenu } from '../reducersFolder/mainReducer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     overflow: 'auto',
-    width: '100%', 
-    backgroundColor: theme.palette.background.paper,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper
   },
   rootInput: {
     '& .Mui-disabled': {
-      color: 'black',
+      color: 'black'
     }
-  },
-}));
+  }
+}))
 
 const mapStateToProps = store => {
-  const { foldersList, folderId} = store.main
+  const { foldersList, folderId, folderContextMenu } = store.main
   return {
     foldersList,
-    folderId
+    folderId,
+    folderContextMenu
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setFolderAction: foldersList => dispatch(setFolder(foldersList)),
-    setFolderIdAction: folderId => dispatch(setFolderId(folderId))
+    setFolderIdAction: folderId => dispatch(setFolderId(folderId)),
+    setPosFolderMenuAction: folderContextMenu => dispatch(setPosFolderMenu(folderContextMenu))
   }
 }
-
-const initialState = {
-  mouseX: null,
-  mouseY: null,
-};
-
-function SelectedListItem(props) {
+function SelectedListItem (props) {
   const classes = useStyles()
-  const { foldersList, folderId, setFolderIdAction } = props
-  const [state, setState] = React.useState(initialState);
+  const { foldersList, folderId, setFolderIdAction, setPosFolderMenuAction } = props
   const uniqid = require('uniqid')
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    setState({
+  const handleDoubleClick = (event) => {
+    event.preventDefault()
+    setPosFolderMenuAction({
       mouseX: event.clientX - 2,
-      mouseY: event.clientY - 4,
-    });
-  };
-
-  const handleClose = () => {
-    setState(initialState);
-  };
+      mouseY: event.clientY - 4
+    })
+  }
 
   const handleListItemClick = (event, index) => {
     setFolderIdAction(index)
-  };
+  }
 
   return (
     <div className={classes.root}>
@@ -74,40 +64,26 @@ function SelectedListItem(props) {
             button
             selected={folderId === item.id}
             onClick={(event) => handleListItemClick(event, item.id)}
-            onDoubleClick={handleClick}
+            onDoubleClick={handleDoubleClick}
           >
-            <ListItemText 
+            <ListItemText
               primary={
-                <TextField 
+                <TextField
                   className={classes.rootInput}
                   defaultValue={`${item.name}`}
                   InputProps={{
                     disableUnderline: true,
-                    disabled: true
+                    disabled: false
                   }}
                 />
               }
             />
           </ListItem>
         ))}
+        <ContextMenu/>
       </List>
-      <Menu
-        keepMounted
-        open={state.mouseY !== null}
-        onClose={handleClose}
-        anchorReference="anchorPosition"
-        anchorPosition={
-          state.mouseY !== null && state.mouseX !== null
-            ? { top: state.mouseY, left: state.mouseX }
-            : undefined
-        }
-      >
-        <MenuItem onClick={handleClose}>Add folder</MenuItem>
-        <MenuItem onClick={handleClose}>Rename folder</MenuItem>
-        <MenuItem onClick={handleClose}>Delete folder</MenuItem>
-      </Menu>
     </div>
-  );
+  )
 }
 
 export default connect(
@@ -116,10 +92,12 @@ export default connect(
 )(SelectedListItem)
 
 SelectedListItem.propTypes = {
-  foldersList: PropTypes.array.isRequired,
+  foldersList: PropTypes.object.isRequired,
+  setPosFolderMenuAction: PropTypes.func.isRequired,
+  folderContextMenu: PropTypes.array.isRequired,
   setFolderIdAction: PropTypes.func.isRequired,
   folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.number.isRequired
-  ]),
+  ])
 }

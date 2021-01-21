@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between'
-    },
-  },
-}));
+    }
+  }
+}))
 
-export default function LeftBlock() {
-  const classes = useStyles();
+export default function LeftBlock () {
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
@@ -29,5 +29,5 @@ export default function LeftBlock() {
         <IconLabelButtons/>
       </Paper>
     </div>
-  );
+  )
 }
