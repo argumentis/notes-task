@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import { connect } from 'react-redux'
 import { setFolder } from '../../reducersFolder/mainReducer'
-import { arrPusher } from './helper'
+import { arrPusher } from '../helper'
 import _ from 'lodash'
 
 const useStyles = makeStyles(() => ({

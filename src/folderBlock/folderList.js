@@ -73,7 +73,7 @@ function SelectedListItem (props) {
                   defaultValue={`${item.name}`}
                   InputProps={{
                     disableUnderline: true,
-                    disabled: false
+                    disabled: true
                   }}
                 />
               }
@@ -92,9 +92,9 @@ export default connect(
 )(SelectedListItem)
 
 SelectedListItem.propTypes = {
-  foldersList: PropTypes.object.isRequired,
+  foldersList: PropTypes.array.isRequired,
   setPosFolderMenuAction: PropTypes.func.isRequired,
-  folderContextMenu: PropTypes.array.isRequired,
+  folderContextMenu: PropTypes.object.isRequired,
   setFolderIdAction: PropTypes.func.isRequired,
   folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,

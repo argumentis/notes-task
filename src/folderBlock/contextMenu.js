@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import _ from 'lodash'
+import { arrPusher, arrRemoveFolder } from './helper'
 import { connect } from 'react-redux'
 import { setFolder, setFolderId, setPosFolderMenu } from '../reducersFolder/mainReducer'
 
@@ -28,11 +30,23 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 function ContextMenu (props) {
-  const { setPosFolderMenuAction, folderContextMenu } = props
+  const { setPosFolderMenuAction, folderContextMenu, setFolderAction, foldersList, folderId, setFolderIdAction } = props
   const { mouseX, mouseY } = folderContextMenu
+  const newData = _.cloneDeep(foldersList)
 
   const handleClose = () => {
     setPosFolderMenuAction(initialState)
+  }
+
+  const addFolderButton = () => {
+    setFolderAction(arrPusher(newData))
+    handleClose()
+  }
+
+  const removeFolderButton = () => {
+    setFolderAction(arrRemoveFolder(newData, folderId))
+    setFolderIdAction(0)
+    handleClose()
   }
 
   return (
@@ -48,9 +62,9 @@ function ContextMenu (props) {
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Add folder</MenuItem>
+        <MenuItem onClick={addFolderButton}>Add folder</MenuItem>
         <MenuItem onClick={handleClose}>Rename folder</MenuItem>
-        <MenuItem onClick={handleClose}>Delete folder</MenuItem>
+        <MenuItem onClick={removeFolderButton}>Delete folder</MenuItem>
       </Menu>
     </div>
   )
@@ -62,9 +76,10 @@ export default connect(
 )(ContextMenu)
 
 ContextMenu.propTypes = {
-  foldersList: PropTypes.object.isRequired,
+  setFolderAction: PropTypes.func.isRequired,
+  foldersList: PropTypes.array.isRequired,
   setPosFolderMenuAction: PropTypes.func.isRequired,
-  folderContextMenu: PropTypes.array.isRequired,
+  folderContextMenu: PropTypes.object.isRequired,
   setFolderIdAction: PropTypes.func.isRequired,
   folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,
