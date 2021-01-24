@@ -1,5 +1,6 @@
 const SET_FOLDER = 'SET_FOLDER'
 const SET_FOLDER_ID = 'SET_FOLDER_ID'
+const SET_SWITCH_FOLDER_INPUT = 'SET_SWITCH_FOLDER_INPUT'
 const SET_FOLDER_MENU_POSITION = 'SET_FOLDER_MENU_POSITION'
 
 const initialState = {
@@ -8,7 +9,8 @@ const initialState = {
   folderContextMenu: {
     mouseX: null,
     mouseY: null
-  }
+  },
+  folderStatusInput: true
 }
 
 export function mainReducer (state = initialState, action) {
@@ -21,6 +23,9 @@ export function mainReducer (state = initialState, action) {
 
     case SET_FOLDER_MENU_POSITION:
       return { ...state, folderContextMenu: action.payload }
+
+    case SET_SWITCH_FOLDER_INPUT:
+      return { ...state, folderStatusInput: action.payload }
 
     default:
       return state
@@ -45,5 +50,12 @@ export function setPosFolderMenu (folderContextMenu) {
   return {
     type: 'SET_FOLDER_MENU_POSITION',
     payload: folderContextMenu
+  }
+}
+
+export function setfolderStatusInput (folderStatusInput) {
+  return {
+    type: 'SET_SWITCH_FOLDER_INPUT',
+    payload: folderStatusInput
   }
 }

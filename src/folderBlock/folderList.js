@@ -6,8 +6,10 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import TextField from '@material-ui/core/TextField'
 import ContextMenu from './contextMenu'
+import _ from 'lodash'
+import { arrRenameFolder } from './helper'
 import { connect } from 'react-redux'
-import { setFolder, setFolderId, setPosFolderMenu } from '../reducersFolder/mainReducer'
+import { setFolder, setFolderId, setPosFolderMenu, setfolderStatusInput } from '../reducersFolder/mainReducer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,18 +18,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper
   },
   rootInput: {
+    '& .Mui-focused': {
+      backgroundColor: '#75c1ff'
+    },
     '& .Mui-disabled': {
-      color: 'black'
+      color: 'black',
+      backgroundColor: 'none'
     }
   }
 }))
 
 const mapStateToProps = store => {
-  const { foldersList, folderId, folderContextMenu } = store.main
+  const { foldersList, folderId, folderContextMenu, folderStatusInput } = store.main
   return {
     foldersList,
     folderId,
-    folderContextMenu
+    folderContextMenu,
+    folderStatusInput
   }
 }
 
@@ -35,12 +42,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setFolderAction: foldersList => dispatch(setFolder(foldersList)),
     setFolderIdAction: folderId => dispatch(setFolderId(folderId)),
-    setPosFolderMenuAction: folderContextMenu => dispatch(setPosFolderMenu(folderContextMenu))
+    setPosFolderMenuAction: folderContextMenu => dispatch(setPosFolderMenu(folderContextMenu)),
+    setfolderStatusInputAction: folderStatusInput => dispatch(setfolderStatusInput(folderStatusInput))
   }
 }
 function SelectedListItem (props) {
   const classes = useStyles()
-  const { foldersList, folderId, setFolderIdAction, setPosFolderMenuAction } = props
+  const { foldersList, folderId, setFolderIdAction, setPosFolderMenuAction, setFolderAction, folderStatusInput, setfolderStatusInputAction } = props
   const uniqid = require('uniqid')
 
   const handleDoubleClick = (event) => {
@@ -53,6 +61,12 @@ function SelectedListItem (props) {
 
   const handleListItemClick = (event, index) => {
     setFolderIdAction(index)
+  }
+
+  const handleChange = (event) => {
+    const newData = _.cloneDeep(foldersList)
+    setFolderAction(arrRenameFolder(newData, folderId, event.target.value))
+    setfolderStatusInputAction(true)
   }
 
   return (
@@ -70,10 +84,12 @@ function SelectedListItem (props) {
               primary={
                 <TextField
                   className={classes.rootInput}
-                  defaultValue={`${item.name}`}
+                  defaultValue={item.name}
+                  onBlur={handleChange}
                   InputProps={{
                     disableUnderline: true,
-                    disabled: true
+                    disabled: folderStatusInput,
+                    autoFocus: item.id === folderId !== false
                   }}
                 />
               }
@@ -92,9 +108,11 @@ export default connect(
 )(SelectedListItem)
 
 SelectedListItem.propTypes = {
+  folderStatusInput: PropTypes.bool.isRequired,
+  setfolderStatusInputAction: PropTypes.func.isRequired,
+  setFolderAction: PropTypes.func.isRequired,
   foldersList: PropTypes.array.isRequired,
   setPosFolderMenuAction: PropTypes.func.isRequired,
-  folderContextMenu: PropTypes.object.isRequired,
   setFolderIdAction: PropTypes.func.isRequired,
   folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,

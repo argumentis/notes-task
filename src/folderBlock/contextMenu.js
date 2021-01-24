@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import _ from 'lodash'
 import { arrPusher, arrRemoveFolder } from './helper'
 import { connect } from 'react-redux'
-import { setFolder, setFolderId, setPosFolderMenu } from '../reducersFolder/mainReducer'
+import { setFolder, setFolderId, setPosFolderMenu, setfolderStatusInput } from '../reducersFolder/mainReducer'
 
 const initialState = {
   mouseX: null,
@@ -13,11 +13,12 @@ const initialState = {
 }
 
 const mapStateToProps = store => {
-  const { foldersList, folderId, folderContextMenu } = store.main
+  const { foldersList, folderId, folderContextMenu, folderStatusInput } = store.main
   return {
     foldersList,
     folderId,
-    folderContextMenu
+    folderContextMenu,
+    folderStatusInput
   }
 }
 
@@ -25,12 +26,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setFolderAction: foldersList => dispatch(setFolder(foldersList)),
     setFolderIdAction: folderId => dispatch(setFolderId(folderId)),
-    setPosFolderMenuAction: folderContextMenu => dispatch(setPosFolderMenu(folderContextMenu))
+    setPosFolderMenuAction: folderContextMenu => dispatch(setPosFolderMenu(folderContextMenu)),
+    setfolderStatusInputAction: folderStatusInput => dispatch(setfolderStatusInput(folderStatusInput))
   }
 }
 
 function ContextMenu (props) {
-  const { setPosFolderMenuAction, folderContextMenu, setFolderAction, foldersList, folderId, setFolderIdAction } = props
+  const { setPosFolderMenuAction, folderContextMenu, setFolderAction, foldersList, folderId, setFolderIdAction, setfolderStatusInputAction } = props
   const { mouseX, mouseY } = folderContextMenu
   const newData = _.cloneDeep(foldersList)
 
@@ -41,6 +43,11 @@ function ContextMenu (props) {
   const addFolderButton = () => {
     setFolderAction(arrPusher(newData))
     handleClose()
+  }
+
+  const renameFolderButton = () => {
+    handleClose()
+    setfolderStatusInputAction(false)
   }
 
   const removeFolderButton = () => {
@@ -63,7 +70,7 @@ function ContextMenu (props) {
         }
       >
         <MenuItem onClick={addFolderButton}>Add folder</MenuItem>
-        <MenuItem onClick={handleClose}>Rename folder</MenuItem>
+        <MenuItem onClick={renameFolderButton}>Rename folder</MenuItem>
         <MenuItem onClick={removeFolderButton}>Delete folder</MenuItem>
       </Menu>
     </div>
@@ -76,6 +83,7 @@ export default connect(
 )(ContextMenu)
 
 ContextMenu.propTypes = {
+  setfolderStatusInputAction: PropTypes.func.isRequired,
   setFolderAction: PropTypes.func.isRequired,
   foldersList: PropTypes.array.isRequired,
   setPosFolderMenuAction: PropTypes.func.isRequired,
