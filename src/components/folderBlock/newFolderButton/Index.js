@@ -4,21 +4,23 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import { connect } from 'react-redux'
-import { setFolder } from '../../reducersFolder/mainReducer'
+import { setFolder } from '../../../reducersFolder/folderReducer'
 import { arrPusher } from '../helper'
 import _ from 'lodash'
 
 const useStyles = makeStyles(() => ({
-
   root: {
     textTransform: 'none',
     fontWeight: 'bold',
-    width: '100%'
+    width: '100%',
+    display: '  flex',
+    justifyContent: 'flex-start',
+    paddingLeft: '15px'
   }
 }))
 
 const mapStateToProps = store => {
-  const { foldersList } = store.main
+  const { foldersList } = store.folder
   return {
     foldersList
   }
@@ -40,7 +42,7 @@ function IconLabelButtons (props) {
   }
 
   return (
-    <div>
+    <div className={classes.buttonStyle}>
       <Button
         className={classes.root}
         startIcon={<AddCircleOutlineIcon />}

@@ -1,32 +1,29 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import SelectedListItem from './folderList'
-import IconLabelButtons from './newFolderButton/Index'
+import SelectedListItem from './notesList'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
     '& > *': {
-      margin: theme.spacing(1),
-      width: theme.spacing(25),
-      height: theme.spacing(95),
       display: 'flex',
+      height: '95vh',
       flexDirection: 'column',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      backgroundColor: '#f7f6f7'
     }
   }
 }))
 
-export default function LeftBlock () {
+export default function CenterBlock () {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <Paper variant="outlined" square>
-        <SelectedListItem/>
-        <IconLabelButtons/>
+        <SelectedListItem style={{}}/>
       </Paper>
     </div>
   )

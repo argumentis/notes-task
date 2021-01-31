@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import _ from 'lodash'
-import { arrPusher, arrRemoveFolder } from './helper'
+import { arrPusher, arrRemoveFolder, changeStatusFolder } from '../helper'
 import { connect } from 'react-redux'
-import { setFolder, setFolderId, setPosFolderMenu, setfolderStatusInput } from '../reducersFolder/mainReducer'
+import { setFolder, setFolderId } from '../../../reducersFolder/folderReducer'
 
 const initialState = {
   mouseX: null,
@@ -13,45 +13,46 @@ const initialState = {
 }
 
 const mapStateToProps = store => {
-  const { foldersList, folderId, folderContextMenu, folderStatusInput } = store.main
+  const { foldersList, folderId } = store.folder
+  const { notesList } = store.notes
   return {
     foldersList,
     folderId,
-    folderContextMenu,
-    folderStatusInput
+    notesList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setFolderAction: foldersList => dispatch(setFolder(foldersList)),
-    setFolderIdAction: folderId => dispatch(setFolderId(folderId)),
-    setPosFolderMenuAction: folderContextMenu => dispatch(setPosFolderMenu(folderContextMenu)),
-    setfolderStatusInputAction: folderStatusInput => dispatch(setfolderStatusInput(folderStatusInput))
+    setFolderIdAction: folderId => dispatch(setFolderId(folderId))
   }
 }
 
 function ContextMenu (props) {
-  const { setPosFolderMenuAction, folderContextMenu, setFolderAction, foldersList, folderId, setFolderIdAction, setfolderStatusInputAction } = props
-  const { mouseX, mouseY } = folderContextMenu
-  const newData = _.cloneDeep(foldersList)
+  const { setFolderAction, foldersList, setFolderIdAction, folderId, posContextMenu, setPosContextMenu, notesList } = props
+  const { mouseX, mouseY } = posContextMenu
 
   const handleClose = () => {
-    setPosFolderMenuAction(initialState)
+    setPosContextMenu(initialState)
   }
 
   const addFolderButton = () => {
+    const newData = _.cloneDeep(foldersList)
     setFolderAction(arrPusher(newData))
     handleClose()
   }
 
-  const renameFolderButton = () => {
+  const renameFolderButton = (event) => {
     handleClose()
-    setfolderStatusInputAction(false)
+    const newData = _.cloneDeep(foldersList)
+    setFolderAction(changeStatusFolder(newData, folderId))
   }
 
   const removeFolderButton = () => {
-    setFolderAction(arrRemoveFolder(newData, folderId))
+    const newDataFolders = _.cloneDeep(foldersList)
+    const newDataNotes = _.cloneDeep(notesList)
+    setFolderAction(arrRemoveFolder(newDataFolders, newDataNotes, folderId))
     setFolderIdAction(0)
     handleClose()
   }
@@ -83,11 +84,11 @@ export default connect(
 )(ContextMenu)
 
 ContextMenu.propTypes = {
-  setfolderStatusInputAction: PropTypes.func.isRequired,
   setFolderAction: PropTypes.func.isRequired,
   foldersList: PropTypes.array.isRequired,
-  setPosFolderMenuAction: PropTypes.func.isRequired,
-  folderContextMenu: PropTypes.object.isRequired,
+  notesList: PropTypes.array.isRequired,
+  setPosContextMenu: PropTypes.func.isRequired,
+  posContextMenu: PropTypes.object.isRequired,
   setFolderIdAction: PropTypes.func.isRequired,
   folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,

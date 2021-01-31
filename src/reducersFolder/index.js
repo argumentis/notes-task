@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import { mainReducer } from './mainReducer'
+import { folderReducer } from './folderReducer'
+import { notesReducer } from './notesReducer'
 
 export const rootReducer = combineReducers({
-  main: mainReducer
+  folder: folderReducer,
+  notes: notesReducer
 })
