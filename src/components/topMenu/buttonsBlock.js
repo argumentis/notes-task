@@ -63,8 +63,10 @@ function ButtonsBlock (props) {
   }
 
   const addNoteButton = () => {
-    const newData = _.cloneDeep(notesList)
-    setNotesAction(arrPusher(newData, folderId))
+    if (folderId !== 0) {
+      const newData = _.cloneDeep(notesList)
+      setNotesAction(arrPusher(newData, folderId))
+    }
   }
 
   const removeActiveElement = () => {

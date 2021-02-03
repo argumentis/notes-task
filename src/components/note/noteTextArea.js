@@ -66,5 +66,5 @@ NoteTextArea.propTypes = {
   ]),
   notesList: PropTypes.array.isRequired,
   setNotesAction: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string.isRequired
+  defaultValue: PropTypes.string
 }

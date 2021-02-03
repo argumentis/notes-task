@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import { setFolder, setFolderId } from '../../../reducersFolder/folderReducer'
 import { setNoteId } from '../../../reducersFolder/notesReducer'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     '& .MuiListItem-root': {
       height: '20px',
@@ -107,33 +107,33 @@ function FolderItem (props, event) {
 
   return (
     <div ref={wrapperRef} className={classes.root}>
-        <ListItem
-            key={uniqid()}
-            button
-            onDoubleClick={handleDoubleClick}
-            selected={folderId === itemId}
-            onClick={(event) => handleListItemClick(event, itemId)}
-          >
-            <ListItemText
-              primary={
-                <TextField
-                  id={itemId}
-                  className={classes.rootInput}
-                  defaultValue={itemName}
-                  onChange={handleOnChange}
-                  InputProps={{
-                    disableUnderline: true,
-                    disabled: itemStatus,
-                    autoFocus: true
-                  }}
-                />
-              }
+      <ListItem
+        key={uniqid()}
+        button
+        onDoubleClick={handleDoubleClick}
+        selected={folderId === itemId}
+        onClick={(event) => handleListItemClick(event, itemId)}
+      >
+        <ListItemText
+          primary={
+            <TextField
+              id={itemId}
+              className={classes.rootInput}
+              defaultValue={itemName}
+              onChange={handleOnChange}
+              InputProps={{
+                disableUnderline: true,
+                disabled: itemStatus,
+                autoFocus: true
+              }}
             />
-          </ListItem>
-          <ContextMenu
-            posContextMenu={contextMenu}
-            setPosContextMenu={setContextMenu}
-          />
+          }
+        />
+      </ListItem>
+      <ContextMenu
+        posContextMenu={contextMenu}
+        setPosContextMenu={setContextMenu}
+      />
     </div>
   )
 }

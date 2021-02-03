@@ -29,14 +29,14 @@ function SelectedListItem (props) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {foldersList.map((item) => (
-          <FolderItem
-            key={uniqid()}
-            itemId={item.id}
-            itemName={item.name}
-            itemStatus={item.disableInput}
-          />
-        ))}
+          {foldersList.map((item, index) => (
+            <FolderItem
+              key={uniqid()}
+              itemId={item.id}
+              itemName={item.name}
+              itemStatus={item.disableInput}
+            />
+          ))}
       </List>
     </div>
   )

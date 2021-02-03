@@ -106,34 +106,34 @@ function NotesItem (props, event) {
 
   return (
     <div ref={wrapperRef} className={classes.root}>
-        <ListItem
-            key={uniqid()}
-            button
-            onDoubleClick={handleDoubleClick}
-            selected={noteId === itemId}
-            onClick={(event) => handleListItemClick(event, itemId)}
-          >
-            <ListItemText
-              primary={
-                <TextField
-                  id={itemId}
-                  className={classes.rootInput}
-                  value={itemName}
-                  onChange={handleOnChange}
-                  InputProps={{
-                    disableUnderline: true,
-                    disabled: itemStatus,
-                    autoFocus: true
-                  }}
-                />
-              }
+      <ListItem
+        key={uniqid()}
+        button
+        onDoubleClick={handleDoubleClick}
+        selected={noteId === itemId}
+        onClick={(event) => handleListItemClick(event, itemId)}
+      >
+        <ListItemText
+          primary={
+            <TextField
+              id={itemId}
+              className={classes.rootInput}
+              value={itemName}
+              onChange={handleOnChange}
+              InputProps={{
+                disableUnderline: true,
+                disabled: itemStatus,
+                autoFocus: true
+              }}
             />
-            <div>{itemDate}</div>
-          </ListItem>
-          <ContextMenu
-            posContextMenu={contextMenu}
-            setPosContextMenu={setContextMenu}
-          />
+          }
+        />
+        <div>{itemDate}</div>
+      </ListItem>
+      <ContextMenu
+        posContextMenu={contextMenu}
+        setPosContextMenu={setContextMenu}
+      />
     </div>
   )
 }

@@ -34,7 +34,7 @@ function SelectedListItem (props) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {_.filter(notesList, function (item) { return item.folderId === folderId }).map((item) => (
+        {_.filter(notesList, function (item) { return item.folderId === folderId }).map((item, index) => (
           <NotesItem
             key={uniqid()}
             itemId={item.id}
