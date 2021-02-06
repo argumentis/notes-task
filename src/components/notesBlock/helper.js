@@ -29,17 +29,17 @@ export const arrRemoveNote = (arr, noteId) => {
   localStorage.setItem('arrNotes', JSON.stringify(newArr))
   return (newArr)
 }
-// func for change note name
-export const arrRenameNote = (arr, Id, value, status) => {
+// func for change note
+export const changeNote = (type, arr, Id, status, value) => {
   const newArr = arr.map(function (item) {
     if (item.id === Id) {
       return (
         {
           id: item.id,
           folderId: item.folderId,
-          name: value,
+          name: type === 'renameNote' ? value : item.name,
           disableInput: status,
-          noteValue: item.noteValue || '',
+          noteValue: type === 'changeNoteValue' ? value : item.noteValue || '',
           date: item.date,
           dateNote: item.dateNote
         }
@@ -49,26 +49,5 @@ export const arrRenameNote = (arr, Id, value, status) => {
     }
   })
   localStorage.setItem('arrNotes', JSON.stringify(newArr))
-  return (newArr)
-}
-// func for change note status flag
-export const changeStatusNote = (arr, Id) => {
-  const newArr = arr.map(function (item) {
-    if (item.id === Id) {
-      return (
-        {
-          id: item.id,
-          folderId: item.folderId,
-          name: item.name,
-          disableInput: false,
-          noteValue: item.noteValue || '',
-          date: item.date,
-          dateNote: item.dateNote
-        }
-      )
-    } else {
-      return (item)
-    }
-  })
   return (newArr)
 }

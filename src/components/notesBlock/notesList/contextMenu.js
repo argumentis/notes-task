@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import _ from 'lodash'
-import { arrPusher, arrRemoveNote, changeStatusNote } from '../helper'
+import { arrPusher, arrRemoveNote, changeNote } from '../helper'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from '../../../reducersFolder/notesReducer'
 
@@ -46,7 +46,7 @@ function ContextMenu (props) {
   const renameNoteButton = (event) => {
     handleClose()
     const newData = _.cloneDeep(notesList)
-    setNotesAction(changeStatusNote(newData, noteId))
+    setNotesAction(changeNote('changeStatus', newData, noteId, false))
   }
 
   const removeNoteButton = () => {

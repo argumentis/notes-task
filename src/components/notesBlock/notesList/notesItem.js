@@ -5,12 +5,13 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import TextField from '@material-ui/core/TextField'
 import _ from 'lodash'
-import { arrRenameNote } from '../helper'
+import { changeNote } from '../helper'
 import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from '../../../reducersFolder/notesReducer'
+import { Draggable } from 'react-beautiful-dnd'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     '& .Mui-selected': {
       backgroundColor: '#fde46e'
@@ -38,11 +39,9 @@ const useStyles = makeStyles((theme) => ({
 
 const mapStateToProps = store => {
   const { notesList, noteId } = store.notes
-  const { folderId } = store.folder
   return {
     notesList,
-    noteId,
-    folderId
+    noteId
   }
 }
 
@@ -60,8 +59,7 @@ const initialState = {
 
 function NotesItem (props, event) {
   const classes = useStyles()
-  const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, folderId, itemDate } = props
-  const uniqid = require('uniqid')
+  const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, itemDate, index } = props
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
 
@@ -69,9 +67,8 @@ function NotesItem (props, event) {
     useEffect(() => {
       function handleClickOutside (event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          const status = true
           const newData = _.cloneDeep(notesList)
-          setNotesAction(arrRenameNote(newData, noteId, itemName, status, folderId))
+          setNotesAction(changeNote('renameNote', newData, noteId, true, itemName))
         }
       }
       document.addEventListener('mousedown', handleClickOutside)
@@ -97,7 +94,7 @@ function NotesItem (props, event) {
 
   const handleOnChange = (event) => {
     const newData = _.cloneDeep(notesList)
-    setNotesAction(arrRenameNote(newData, noteId, event.target.value, itemStatus))
+    setNotesAction(changeNote('renameNote', newData, noteId, itemStatus, event.target.value))
   }
 
   if (itemStatus === false) {
@@ -106,8 +103,14 @@ function NotesItem (props, event) {
 
   return (
     <div ref={wrapperRef} className={classes.root}>
+    <Draggable index={index} draggableId={itemId} key={itemId} type="TASK">
+    {(provided) => (
+      <div
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        >
       <ListItem
-        key={uniqid()}
         button
         onDoubleClick={handleDoubleClick}
         selected={noteId === itemId}
@@ -130,6 +133,9 @@ function NotesItem (props, event) {
         />
         <div>{itemDate}</div>
       </ListItem>
+      </div>
+    )}
+    </Draggable>
       <ContextMenu
         posContextMenu={contextMenu}
         setPosContextMenu={setContextMenu}
@@ -144,6 +150,7 @@ export default connect(
 )(NotesItem)
 
 NotesItem.propTypes = {
+  index: PropTypes.number.isRequired,
   itemId: PropTypes.string.isRequired,
   itemName: PropTypes.string.isRequired,
   itemDate: PropTypes.string.isRequired,
@@ -152,10 +159,6 @@ NotesItem.propTypes = {
   notesList: PropTypes.array.isRequired,
   setNoteIdAction: PropTypes.func.isRequired,
   noteId: PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.number.isRequired
-  ]),
-  folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.number.isRequired
   ])

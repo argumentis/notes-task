@@ -18,14 +18,14 @@ export const arrRemoveFolder = (arrFolders, arrNotes, folderId) => {
   localStorage.setItem('arrNotes', JSON.stringify(newArrNotes))
   return (newArr)
 }
-// func for change folder name
-export const arrRenameFolder = (arr, folderId, value, status) => {
+// func for change folder
+export const changeFolder = (type, arr, folderId, status, value) => {
   const newArr = arr.map(function (item) {
     if (item.id === folderId) {
       return (
         {
           id: item.id,
-          name: value,
+          name: type === 'renameFolder' ? value : item.name,
           disableInput: status
         }
       )
@@ -34,22 +34,5 @@ export const arrRenameFolder = (arr, folderId, value, status) => {
     }
   })
   localStorage.setItem('arrFolders', JSON.stringify(newArr))
-  return (newArr)
-}
-// func for change folder status flag
-export const changeStatusFolder = (arr, folderId) => {
-  const newArr = arr.map(function (item) {
-    if (item.id === folderId) {
-      return (
-        {
-          id: item.id,
-          name: item.name,
-          disableInput: false
-        }
-      )
-    } else {
-      return (item)
-    }
-  })
   return (newArr)
 }

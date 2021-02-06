@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import _ from 'lodash'
-import { arrPusher, arrRemoveFolder, changeStatusFolder } from '../helper'
+import { arrPusher, arrRemoveFolder, changeFolder } from '../helper'
 import { connect } from 'react-redux'
 import { setFolder, setFolderId } from '../../../reducersFolder/folderReducer'
 
@@ -46,7 +46,7 @@ function ContextMenu (props) {
   const renameFolderButton = (event) => {
     handleClose()
     const newData = _.cloneDeep(foldersList)
-    setFolderAction(changeStatusFolder(newData, folderId))
+    setFolderAction(changeFolder('changeStatus', newData, folderId, false))
   }
 
   const removeFolderButton = () => {

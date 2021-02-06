@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import TextField from '@material-ui/core/TextField'
 import _ from 'lodash'
-import { arrRenameFolder } from '../helper'
+import { changeFolder } from '../helper'
 import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setFolder, setFolderId } from '../../../reducersFolder/folderReducer'
@@ -67,9 +67,8 @@ function FolderItem (props, event) {
     useEffect(() => {
       function handleClickOutside (event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          const status = true
           const newData = _.cloneDeep(foldersList)
-          setFolderAction(arrRenameFolder(newData, folderId, itemName, status))
+          setFolderAction(changeFolder('renameFolder', newData, folderId, true, itemName))
         }
       }
       document.addEventListener('mousedown', handleClickOutside)
@@ -98,7 +97,7 @@ function FolderItem (props, event) {
 
   const handleOnChange = (event) => {
     const newData = _.cloneDeep(foldersList)
-    setFolderAction(arrRenameFolder(newData, folderId, event.target.value, itemStatus))
+    setFolderAction(changeFolder('renameFolder', newData, folderId, itemStatus, event.target.value))
   }
 
   if (itemStatus === false) {

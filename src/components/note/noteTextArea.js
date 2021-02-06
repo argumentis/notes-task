@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setNoteId, setNotes } from '../../reducersFolder/notesReducer'
-import { arrChangeValueNote } from './helper'
+import { changeNote } from '../notesBlock/helper'
 import _ from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ function NoteTextArea (props) {
 
   const handleOnlChange = (event) => {
     const newData = _.cloneDeep(notesList)
-    setNotesAction(arrChangeValueNote(newData, noteId, event.target.value))
+    setNotesAction(changeNote('changeNoteValue', newData, noteId, true, event.target.value))
   }
 
   return (
