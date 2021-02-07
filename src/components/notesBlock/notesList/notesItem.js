@@ -103,39 +103,39 @@ function NotesItem (props, event) {
 
   return (
     <div ref={wrapperRef} className={classes.root}>
-    <Draggable index={index} draggableId={itemId} key={itemId} type="TASK">
-    {(provided) => (
-      <div
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        >
-      <ListItem
-        button
-        onDoubleClick={handleDoubleClick}
-        selected={noteId === itemId}
-        onClick={(event) => handleListItemClick(event, itemId)}
-      >
-        <ListItemText
-          primary={
-            <TextField
-              id={itemId}
-              className={classes.rootInput}
-              value={itemName}
-              onChange={handleOnChange}
-              InputProps={{
-                disableUnderline: true,
-                disabled: itemStatus,
-                autoFocus: true
-              }}
-            />
-          }
-        />
-        <div>{itemDate}</div>
-      </ListItem>
-      </div>
-    )}
-    </Draggable>
+      <Draggable index={index} draggableId={itemId} key={itemId} type="TASK">
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <ListItem
+              button
+              onDoubleClick={handleDoubleClick}
+              selected={noteId === itemId}
+              onClick={(event) => handleListItemClick(event, itemId)}
+            >
+              <ListItemText
+                primary={
+                  <TextField
+                    id={itemId}
+                    className={classes.rootInput}
+                    value={itemName}
+                    onChange={handleOnChange}
+                    InputProps={{
+                      disableUnderline: true,
+                      disabled: itemStatus,
+                      autoFocus: true
+                    }}
+                  />
+                }
+              />
+              <div>{itemDate}</div>
+            </ListItem>
+          </div>
+        )}
+      </Draggable>
       <ContextMenu
         posContextMenu={contextMenu}
         setPosContextMenu={setContextMenu}
