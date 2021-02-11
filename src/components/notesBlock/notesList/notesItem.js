@@ -9,7 +9,6 @@ import { changeNote } from '../helper'
 import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from '../../../reducersFolder/notesReducer'
-import { Draggable } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -59,7 +58,7 @@ const initialState = {
 
 function NotesItem (props, event) {
   const classes = useStyles()
-  const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, itemDate, index } = props
+  const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, itemDate } = props
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
 
@@ -103,39 +102,29 @@ function NotesItem (props, event) {
 
   return (
     <div ref={wrapperRef} className={classes.root}>
-      <Draggable index={index} draggableId={itemId} key={itemId} type="TASK">
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            <ListItem
-              button
-              onDoubleClick={handleDoubleClick}
-              selected={noteId === itemId}
-              onClick={(event) => handleListItemClick(event, itemId)}
-            >
-              <ListItemText
-                primary={
-                  <TextField
-                    id={itemId}
-                    className={classes.rootInput}
-                    value={itemName}
-                    onChange={handleOnChange}
-                    InputProps={{
-                      disableUnderline: true,
-                      disabled: itemStatus,
-                      autoFocus: true
-                    }}
-                  />
-                }
-              />
-              <div>{itemDate}</div>
-            </ListItem>
-          </div>
-        )}
-      </Draggable>
+      <ListItem
+        button
+        onDoubleClick={handleDoubleClick}
+        selected={noteId === itemId}
+        onClick={(event) => handleListItemClick(event, itemId)}
+      >
+        <ListItemText
+          primary={
+            <TextField
+              id={itemId}
+              className={classes.rootInput}
+              value={itemName}
+              onChange={handleOnChange}
+              InputProps={{
+                disableUnderline: true,
+                disabled: itemStatus,
+                autoFocus: true
+              }}
+            />
+          }
+        />
+        <div>{itemDate}</div>
+      </ListItem>
       <ContextMenu
         posContextMenu={contextMenu}
         setPosContextMenu={setContextMenu}

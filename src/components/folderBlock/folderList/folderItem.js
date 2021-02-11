@@ -18,10 +18,6 @@ const useStyles = makeStyles(() => ({
       padding: '15px 0px 15px 15px'
     }
   },
-  listItemStyle: {
-    height: '20px',
-    padding: '15px 0px 15px 15px'
-  },
   rootInput: {
     '& .Mui-focused': {
       backgroundColor: '#75c1ff'

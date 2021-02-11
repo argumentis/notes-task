@@ -4,6 +4,7 @@ import LeftBlock from './components/folderBlock/Index'
 import CenterBlock from './components/notesBlock/Index'
 import NoteText from './components/note/index'
 import TopMenu from './components/topMenu/index'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,18 @@ const useStyles = makeStyles((theme) => ({
 function App () {
   const [folderListDisplay, setFolderListDisplay] = useState('block')
   const classes = useStyles()
+
+  const handleOnDragEnd = (result, e) => {
+    console.log(result)
+    // const { destination } = result
+
+    // if (!destination) {
+    //   return
+    // }
+  }
+
   return (
+    <DragDropContext onDragEnd={handleOnDragEnd}>
     <div className={classes.root}>
       <div className={classes.topMenu}>
         <TopMenu folderListDisplay={folderListDisplay} setFolderListDisplay={setFolderListDisplay}/>
@@ -40,6 +52,7 @@ function App () {
         <div className={classes.right}><NoteText/></div>
       </div>
     </div>
+    </DragDropContext>
   )
 }
 
