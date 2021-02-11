@@ -5,7 +5,7 @@ import List from '@material-ui/core/List'
 import { connect } from 'react-redux'
 import NotesItem from './notesItem'
 import _ from 'lodash'
-import { Droppable, DragDropContext } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,33 +31,42 @@ const mapStateToProps = store => {
 function SelectedListItem (props) {
   const classes = useStyles()
   const { notesList, folderId } = props
-  const uniqid = require('uniqid')
-
-  function handleOnDragEnd (event) {
-
-  }
+  const init = _.filter(notesList, function (item) { return item.folderId === folderId })
 
   return (
     <div className={classes.root}>
-    <DragDropContext onDragEnd={handleOnDragEnd}>
-    <Droppable droppableId="droppable">
-    {(provided) => (
-      <List component="nav" aria-label="main mailbox folders" {...provided.droppableProps} ref={provided.innerRef}>
-        {_.filter(notesList, function (item) { return item.folderId === folderId }).map((item, index) => (
-          <NotesItem
-            key={uniqid()}
-            index={index}
-            itemId={item.id}
-            itemName={item.name}
-            itemStatus={item.disableInput}
-            itemDate={item.date}
-          />
-        ))}
-        {provided.placeholder}
-      </List>
-    )}
-    </Droppable>
-    </DragDropContext>
+      <Droppable droppableId="droppable">
+        {(provided) => (
+          <List
+            className="characters"
+            component="nav"
+            aria-label="main mailbox folders"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {init.map((item, index) => (
+              <Draggable index={index} draggableId={item.id} key={item.id} type="TASK">
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <NotesItem
+                      index={index}
+                      itemId={item.id}
+                      itemName={item.name}
+                      itemStatus={item.disableInput}
+                      itemDate={item.date}
+                    />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </List>
+        )}
+      </Droppable>
     </div>
   )
 }

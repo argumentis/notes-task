@@ -36,7 +36,7 @@ export const changeNote = (type, arr, Id, status, value) => {
       return (
         {
           id: item.id,
-          folderId: item.folderId,
+          folderId: type === 'changeFolderId' ? value : item.folderId,
           name: type === 'renameNote' ? value : item.name,
           disableInput: status,
           noteValue: type === 'changeNoteValue' ? value : item.noteValue || '',

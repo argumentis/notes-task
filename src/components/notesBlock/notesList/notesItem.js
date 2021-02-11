@@ -9,7 +9,6 @@ import { changeNote } from '../helper'
 import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from '../../../reducersFolder/notesReducer'
-import { Draggable } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -59,7 +58,7 @@ const initialState = {
 
 function NotesItem (props, event) {
   const classes = useStyles()
-  const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, itemDate, index } = props
+  const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, itemDate } = props
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
 
@@ -103,13 +102,6 @@ function NotesItem (props, event) {
 
   return (
     <div ref={wrapperRef} className={classes.root}>
-    <Draggable index={index} draggableId={itemId} key={itemId} type="TASK">
-    {(provided) => (
-      <div
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        >
       <ListItem
         button
         onDoubleClick={handleDoubleClick}
@@ -133,9 +125,6 @@ function NotesItem (props, event) {
         />
         <div>{itemDate}</div>
       </ListItem>
-      </div>
-    )}
-    </Draggable>
       <ContextMenu
         posContextMenu={contextMenu}
         setPosContextMenu={setContextMenu}

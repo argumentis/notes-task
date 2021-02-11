@@ -4,13 +4,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import { connect } from 'react-redux'
 import FolderItem from './folderItem'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     overflow: 'auto',
-    width: '100%',
-    backgroundColor: 'none',
-    paddingTop: '0px'
+    backgroundColor: 'none'
   }
 }))
 
@@ -28,16 +27,37 @@ function SelectedListItem (props) {
 
   return (
     <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders">
-          {foldersList.map((item, index) => (
-            <FolderItem
-              key={uniqid()}
-              itemId={item.id}
-              itemName={item.name}
-              itemStatus={item.disableInput}
-            />
-          ))}
-      </List>
+      <Droppable droppableId="droppableFolder" isCombineEnabled>
+        {(provided) => (
+          <List
+            className="characters"
+            component="nav"
+            aria-label="main mailbox folders"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {foldersList.map((item, index) => (
+              <Draggable index={index} draggableId={item.id} key={item.id} type="TASK">
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.dragHandleProps}
+                  >
+                    <FolderItem
+                      key={uniqid()}
+                      index={index}
+                      itemId={item.id}
+                      itemName={item.name}
+                      itemStatus={item.disableInput}
+                    />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </List>
+        )}
+      </Droppable>
     </div>
   )
 }
