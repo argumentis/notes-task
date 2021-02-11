@@ -45,7 +45,6 @@ function SelectedListItem (props) {
                   >
                     <FolderItem
                       key={uniqid()}
-                      index={index}
                       itemId={item.id}
                       itemName={item.name}
                       itemStatus={item.disableInput}

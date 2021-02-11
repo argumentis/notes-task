@@ -55,7 +55,6 @@ const initialState = {
 function FolderItem (props, event) {
   const classes = useStyles()
   const { foldersList, folderId, setFolderIdAction, setFolderAction, itemId, itemName, itemStatus, setNoteIdAction, noteId } = props
-  const uniqid = require('uniqid')
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
 
@@ -103,7 +102,6 @@ function FolderItem (props, event) {
   return (
     <div ref={wrapperRef} className={classes.root}>
       <ListItem
-        key={uniqid()}
         button
         onDoubleClick={handleDoubleClick}
         selected={folderId === itemId}

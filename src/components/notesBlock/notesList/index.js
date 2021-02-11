@@ -31,6 +31,7 @@ const mapStateToProps = store => {
 function SelectedListItem (props) {
   const classes = useStyles()
   const { notesList, folderId } = props
+  const uniqid = require('uniqid')
   const init = _.filter(notesList, function (item) { return item.folderId === folderId })
 
   return (
@@ -53,7 +54,7 @@ function SelectedListItem (props) {
                     {...provided.dragHandleProps}
                   >
                     <NotesItem
-                      index={index}
+                      key={uniqid()}
                       itemId={item.id}
                       itemName={item.name}
                       itemStatus={item.disableInput}

@@ -139,7 +139,6 @@ export default connect(
 )(NotesItem)
 
 NotesItem.propTypes = {
-  index: PropTypes.number.isRequired,
   itemId: PropTypes.string.isRequired,
   itemName: PropTypes.string.isRequired,
   itemDate: PropTypes.string.isRequired,
