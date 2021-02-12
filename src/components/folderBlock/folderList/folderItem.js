@@ -58,6 +58,7 @@ function FolderItem (props, event) {
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
 
+  // func for change status input when click outside folder item
   function useOutsideClose (ref) {
     useEffect(() => {
       function handleClickOutside (event) {
@@ -73,6 +74,7 @@ function FolderItem (props, event) {
     }, [ref])
   }
 
+  // func for set selected folder
   const handleListItemClick = (event, index) => {
     if (folderId !== itemId) {
       setFolderIdAction(index)
@@ -82,6 +84,7 @@ function FolderItem (props, event) {
     }
   }
 
+  // func for set coordinates context menu
   const handleDoubleClick = (event) => {
     event.preventDefault()
     setContextMenu({
@@ -90,11 +93,13 @@ function FolderItem (props, event) {
     })
   }
 
+  // func for change value name folder onChange
   const handleOnChange = (event) => {
     const newData = _.cloneDeep(foldersList)
     setFolderAction(changeFolder('renameFolder', newData, folderId, itemStatus, event.target.value))
   }
 
+  // monitors the state of input
   if (itemStatus === false) {
     useOutsideClose(wrapperRef)
   }

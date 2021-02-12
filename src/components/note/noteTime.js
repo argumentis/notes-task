@@ -17,7 +17,7 @@ export default function NoteTime (props) {
 
   return (
     <div className={classes.timeStyle}>
-         {itemTime}
+      {itemTime}
     </div>
   )
 }

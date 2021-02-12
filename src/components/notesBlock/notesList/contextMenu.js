@@ -33,22 +33,26 @@ function ContextMenu (props) {
   const { setNotesAction, notesList, setNoteIdAction, noteId, posContextMenu, setPosContextMenu, folderId } = props
   const { mouseX, mouseY } = posContextMenu
 
+  // func for close context menu
   const handleClose = () => {
     setPosContextMenu(initialState)
   }
 
+  // func for push new note to array
   const addNoteButton = () => {
     const newData = _.cloneDeep(notesList)
     setNotesAction(arrPusher(newData, folderId))
     handleClose()
   }
 
+  // func for change note name
   const renameNoteButton = (event) => {
     handleClose()
     const newData = _.cloneDeep(notesList)
     setNotesAction(changeNote('changeStatus', newData, noteId, false))
   }
 
+  // func for delete note from array
   const removeNoteButton = () => {
     const newData = _.cloneDeep(notesList)
     setNotesAction(arrRemoveNote(newData, noteId))
@@ -64,7 +68,7 @@ function ContextMenu (props) {
         onClose={handleClose}
         anchorReference="anchorPosition"
         anchorPosition={
-          mouseY !== null && mouseX !== null
+          mouseY !== null && mouseX !== null // take X Y position context menu
             ? { top: mouseY, left: mouseX }
             : undefined
         }

@@ -46,7 +46,12 @@ function SelectedListItem (props) {
             ref={provided.innerRef}
           >
             {init.map((item, index) => (
-              <Draggable index={index} draggableId={item.id} key={item.id} type="TASK">
+              <Draggable
+                index={index}
+                draggableId={item.id}
+                key={item.id}
+                type="TASK"
+              >
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}

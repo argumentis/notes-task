@@ -27,9 +27,9 @@ export default function ClosingMenu () {
 
   return (
     <div className={classes.root}>
-        <div className={classes.redButton}></div>
-        <div className={classes.yellowButton}></div>
-        <div className={classes.greenButton}></div>
+      <div className={classes.redButton}></div>
+      <div className={classes.yellowButton}></div>
+      <div className={classes.greenButton}></div>
     </div>
   )
 }

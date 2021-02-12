@@ -37,6 +37,7 @@ function IconLabelButtons (props) {
   const { foldersList, setFolderAction } = props
   const newData = _.cloneDeep(foldersList)
 
+  // func for add folder to array
   const handleButtonClick = () => {
     setFolderAction(arrPusher(newData))
   }

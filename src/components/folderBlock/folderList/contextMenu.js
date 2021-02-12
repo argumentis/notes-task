@@ -33,22 +33,26 @@ function ContextMenu (props) {
   const { setFolderAction, foldersList, setFolderIdAction, folderId, posContextMenu, setPosContextMenu, notesList } = props
   const { mouseX, mouseY } = posContextMenu
 
+  // func for close context menu
   const handleClose = () => {
     setPosContextMenu(initialState)
   }
 
+  // func for push new folder to array
   const addFolderButton = () => {
     const newData = _.cloneDeep(foldersList)
     setFolderAction(arrPusher(newData))
     handleClose()
   }
 
+  // func for change folder name
   const renameFolderButton = (event) => {
     handleClose()
     const newData = _.cloneDeep(foldersList)
     setFolderAction(changeFolder('changeStatus', newData, folderId, false))
   }
 
+  // func for delete folder from array
   const removeFolderButton = () => {
     const newDataFolders = _.cloneDeep(foldersList)
     const newDataNotes = _.cloneDeep(notesList)
@@ -65,7 +69,7 @@ function ContextMenu (props) {
         onClose={handleClose}
         anchorReference="anchorPosition"
         anchorPosition={
-          mouseY !== null && mouseX !== null
+          mouseY !== null && mouseX !== null // take X Y position context menu
             ? { top: mouseY, left: mouseX }
             : undefined
         }

@@ -54,6 +54,7 @@ function App (props) {
   const { setNotesAction, notesList, setNoteIdAction } = props
   const classes = useStyles()
 
+  // func for change folder id from note when DRAG ended
   const handleOnDragEnd = (result) => {
     console.log(result)
     const { combine, draggableId } = result

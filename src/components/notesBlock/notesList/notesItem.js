@@ -62,6 +62,7 @@ function NotesItem (props, event) {
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
 
+  // func for change status input when click outside note item
   function useOutsideClose (ref) {
     useEffect(() => {
       function handleClickOutside (event) {
@@ -77,12 +78,14 @@ function NotesItem (props, event) {
     }, [ref])
   }
 
+  // func for set selected folder
   const handleListItemClick = (event, index) => {
     if (noteId !== itemId) {
       setNoteIdAction(index)
     }
   }
 
+  // func for set coordinates context menu
   const handleDoubleClick = (event) => {
     event.preventDefault()
     setContextMenu({
@@ -91,11 +94,13 @@ function NotesItem (props, event) {
     })
   }
 
+  // func for change value name note onChange
   const handleOnChange = (event) => {
     const newData = _.cloneDeep(notesList)
     setNotesAction(changeNote('renameNote', newData, noteId, itemStatus, event.target.value))
   }
 
+  // monitors the state of input
   if (itemStatus === false) {
     useOutsideClose(wrapperRef)
   }
@@ -123,7 +128,9 @@ function NotesItem (props, event) {
             />
           }
         />
-        <div>{itemDate}</div>
+        <div>
+          {itemDate}
+        </div>
       </ListItem>
       <ContextMenu
         posContextMenu={contextMenu}

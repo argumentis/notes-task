@@ -38,6 +38,7 @@ function NoteTextArea (props) {
   const classes = useStyles()
   const { noteId, notesList, setNotesAction, defaultValue } = props
 
+  // func for change note value onChange
   const handleOnlChange = (event) => {
     const newData = _.cloneDeep(notesList)
     setNotesAction(changeNote('changeNoteValue', newData, noteId, true, event.target.value))
@@ -45,11 +46,11 @@ function NoteTextArea (props) {
 
   return (
     <div>
-        <textarea
-            className={classes.textAreaStyle}
-            defaultValue={defaultValue}
-            onBlur={handleOnlChange}
-        />
+      <textarea
+        className={classes.textAreaStyle}
+        defaultValue={defaultValue}
+        onBlur={handleOnlChange}
+      />
     </div>
   )
 }

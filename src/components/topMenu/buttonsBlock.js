@@ -54,6 +54,7 @@ function ButtonsBlock (props) {
   const classes = useStyles()
   const { folderListDisplay, setFolderListDisplay, notesList, folderId, setNotesAction, setNoteIdAction, noteId, foldersList, setFolderAction, setFolderIdAction } = props
 
+  // func for close/open folder lost
   const changeDisplay = () => {
     if (folderListDisplay === 'block') {
       setFolderListDisplay('none')
@@ -62,6 +63,7 @@ function ButtonsBlock (props) {
     }
   }
 
+  // func for add new notes from folder
   const addNoteButton = () => {
     if (folderId !== 0) {
       const newData = _.cloneDeep(notesList)
@@ -69,6 +71,7 @@ function ButtonsBlock (props) {
     }
   }
 
+  // func for remove active element folder/note
   const removeActiveElement = () => {
     const newDataFolders = _.cloneDeep(foldersList)
     const newDataNotes = _.cloneDeep(notesList)
