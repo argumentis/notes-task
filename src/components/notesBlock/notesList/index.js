@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     overflow: 'auto',
     backgroundColor: 'none',
-    height: '95vh',
     '& > *': {
       padding: '0px',
       width: '100%'
@@ -28,11 +27,12 @@ const mapStateToProps = store => {
   }
 }
 
-function SelectedListItem (props) {
+function SelectedListItemNotes (props) {
   const classes = useStyles()
-  const { notesList, folderId } = props
+  const { notesList, folderId, currFolderId } = props
   const uniqid = require('uniqid')
-  const init = _.filter(notesList, function (item) { return item.folderId === folderId })
+  const filterRules = !currFolderId ? folderId : currFolderId
+  const init = _.filter(notesList, function (item) { return item.folderId === filterRules })
 
   return (
     <div className={classes.root}>
@@ -79,9 +79,10 @@ function SelectedListItem (props) {
 
 export default connect(
   mapStateToProps
-)(SelectedListItem)
+)(SelectedListItemNotes)
 
-SelectedListItem.propTypes = {
+SelectedListItemNotes.propTypes = {
+  currFolderId: PropTypes.string,
   notesList: PropTypes.array.isRequired,
   folderId: PropTypes.oneOfType([
     PropTypes.string.isRequired,

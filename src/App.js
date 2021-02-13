@@ -10,6 +10,7 @@ import _ from 'lodash'
 import { changeNote } from './components/notesBlock/helper'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from './reducersFolder/notesReducer'
+import Hidden from '@material-ui/core/Hidden'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     height: '95vh'
+  },
+  left: {
+    flex: '0 25%',
+    [theme.breakpoints.down('sm')]: {
+      flex: '0 100%'
+    }
   },
   center: {
     flex: '0 25%'
@@ -68,13 +75,17 @@ function App (props) {
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
     <div className={classes.root}>
-      <div className={classes.topMenu}>
-        <TopMenu folderListDisplay={folderListDisplay} setFolderListDisplay={setFolderListDisplay}/>
-      </div>
+      <Hidden smDown>
+        <div className={classes.topMenu}>
+          <TopMenu folderListDisplay={folderListDisplay} setFolderListDisplay={setFolderListDisplay}/>
+        </div>
+      </Hidden>
       <div className={classes.main}>
-        <div style={{ flex: '0 25%', display: folderListDisplay }}><LeftBlock/></div>
-        <div className={classes.center}><CenterBlock/></div>
-        <div className={classes.right}><NoteText/></div>
+        <div className={classes.left} style={{ display: folderListDisplay }}><LeftBlock/></div>
+        <Hidden smDown>
+          <div className={classes.center}><CenterBlock/></div>
+          <div className={classes.right}><NoteText/></div>
+        </Hidden>
       </div>
     </div>
     </DragDropContext>

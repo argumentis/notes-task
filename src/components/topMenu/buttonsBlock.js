@@ -57,10 +57,9 @@ function ButtonsBlock (props) {
   // func for close/open folder lost
   const changeDisplay = () => {
     if (folderListDisplay === 'block') {
-      setFolderListDisplay('none')
-    } else {
-      setFolderListDisplay('block')
+      return setFolderListDisplay('none')
     }
+    return setFolderListDisplay('block')
   }
 
   // func for add new notes from folder

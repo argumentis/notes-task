@@ -9,9 +9,12 @@ import { changeNote } from '../helper'
 import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from '../../../reducersFolder/notesReducer'
+import ButtonsBlockNotesMobil from './mobileVersionFiles/buttonsBlock'
+import Hidden from '@material-ui/core/Hidden'
 
 const useStyles = makeStyles(() => ({
   root: {
+    display: 'flex',
     '& .Mui-selected': {
       backgroundColor: '#fde46e'
     },
@@ -61,6 +64,7 @@ function NotesItem (props, event) {
   const { notesList, noteId, setNoteIdAction, setNotesAction, itemId, itemName, itemStatus, itemDate } = props
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
+  const uniqid = require('uniqid')
 
   // func for change status input when click outside note item
   function useOutsideClose (ref) {
@@ -116,7 +120,7 @@ function NotesItem (props, event) {
         <ListItemText
           primary={
             <TextField
-              id={itemId}
+              id={uniqid()}
               className={classes.rootInput}
               value={itemName}
               onChange={handleOnChange}
@@ -132,6 +136,9 @@ function NotesItem (props, event) {
           {itemDate}
         </div>
       </ListItem>
+      <Hidden mdUp>
+        <ButtonsBlockNotesMobil currId={itemId}/>
+      </Hidden>
       <ContextMenu
         posContextMenu={contextMenu}
         setPosContextMenu={setContextMenu}

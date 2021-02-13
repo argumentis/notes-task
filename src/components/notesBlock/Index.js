@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import SelectedListItem from './notesList'
+import SelectedListItemNotes from './notesList'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ export default function CenterBlock () {
   return (
     <div className={classes.root}>
       <Paper variant="outlined" square>
-        <SelectedListItem style={{}}/>
+        <SelectedListItemNotes/>
       </Paper>
     </div>
   )

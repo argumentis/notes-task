@@ -29,9 +29,8 @@ export const changeFolder = (type, arr, folderId, status, value) => {
           disableInput: status
         }
       )
-    } else {
-      return (item)
     }
+    return (item)
   })
   localStorage.setItem('arrFolders', JSON.stringify(newArr))
   return (newArr)

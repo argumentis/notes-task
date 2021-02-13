@@ -13,7 +13,10 @@ const useStyles = makeStyles((theme) => ({
       height: '95vh',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      backgroundColor: '#f7f6f7'
+      backgroundColor: '#f7f6f7',
+      [theme.breakpoints.down('sm')]: {
+        height: '100vh'
+      }
     }
   }
 }))

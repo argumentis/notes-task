@@ -10,12 +10,19 @@ import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setFolder, setFolderId } from '../../../reducersFolder/folderReducer'
 import { setNoteId } from '../../../reducersFolder/notesReducer'
+import SelectedListItemNotes from '../../notesBlock/notesList'
+import Hidden from '@material-ui/core/Hidden'
+import ButtonsBlockNotesMobil from './mobileVersionFiles/buttonsBlock'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiListItem-root': {
       height: '20px',
-      padding: '15px 0px 15px 15px'
+      padding: '15px 0px 15px 15px',
+      [theme.breakpoints.down('sm')]: {
+        backgroundColor: '#cccccc',
+        height: '60px'
+      }
     }
   },
   rootInput: {
@@ -105,29 +112,37 @@ function FolderItem (props, event) {
   }
 
   return (
-    <div ref={wrapperRef} className={classes.root}>
-      <ListItem
-        button
-        onDoubleClick={handleDoubleClick}
-        selected={folderId === itemId}
-        onClick={(event) => handleListItemClick(event, itemId)}
-      >
-        <ListItemText
-          primary={
-            <TextField
-              id={itemId}
-              className={classes.rootInput}
-              defaultValue={itemName}
-              onChange={handleOnChange}
-              InputProps={{
-                disableUnderline: true,
-                disabled: itemStatus,
-                autoFocus: true
-              }}
-            />
-          }
-        />
-      </ListItem>
+    <div>
+      <div className={classes.root} ref={wrapperRef}>
+        <ListItem
+          button
+          onDoubleClick={handleDoubleClick}
+          selected={folderId === itemId}
+          onClick={(event) => handleListItemClick(event, itemId)}
+        >
+          <ListItemText
+            primary={
+              <TextField
+                id={itemId}
+                className={classes.rootInput}
+                defaultValue={itemName}
+                onChange={handleOnChange}
+                InputProps={{
+                  disableUnderline: true,
+                  disabled: itemStatus,
+                  autoFocus: true
+                }}
+              />
+            }
+          />
+           <Hidden mdUp>
+           <ButtonsBlockNotesMobil currId={itemId}/>
+           </Hidden>
+        </ListItem>
+      </div>
+      <Hidden mdUp>
+        <SelectedListItemNotes currFolderId={itemId}/>
+      </Hidden>
       <ContextMenu
         posContextMenu={contextMenu}
         setPosContextMenu={setContextMenu}

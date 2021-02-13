@@ -44,9 +44,8 @@ export const changeNote = (type, arr, Id, status, value) => {
           dateNote: item.dateNote
         }
       )
-    } else {
-      return (item)
     }
+    return (item)
   })
   localStorage.setItem('arrNotes', JSON.stringify(newArr))
   return (newArr)
