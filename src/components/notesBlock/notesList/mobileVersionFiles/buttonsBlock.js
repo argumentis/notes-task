@@ -12,7 +12,7 @@ import _ from 'lodash'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginRight: '40px',
+    marginRight: '20px',
     '& > *': {
       marginLeft: '5px',
       marginTop: '30px',

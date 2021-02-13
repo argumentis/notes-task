@@ -13,6 +13,7 @@ import { setNoteId } from '../../../reducersFolder/notesReducer'
 import SelectedListItemNotes from '../../notesBlock/notesList'
 import Hidden from '@material-ui/core/Hidden'
 import ButtonsBlockNotesMobil from './mobileVersionFiles/buttonsBlock'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,7 +142,9 @@ function FolderItem (props, event) {
         </ListItem>
       </div>
       <Hidden mdUp>
-        <SelectedListItemNotes currFolderId={itemId}/>
+        <DragDropContext>
+          <SelectedListItemNotes currFolderId={itemId}/>
+        </DragDropContext>
       </Hidden>
       <ContextMenu
         posContextMenu={contextMenu}
