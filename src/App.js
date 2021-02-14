@@ -63,7 +63,6 @@ function App (props) {
 
   // func for change folder id from note when DRAG ended
   const handleOnDragEnd = (result) => {
-    console.log(result)
     const { combine, draggableId } = result
     if (combine) {
       const newData = _.cloneDeep(notesList)

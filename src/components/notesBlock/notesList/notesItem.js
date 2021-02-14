@@ -113,7 +113,7 @@ function NotesItem (props, event) {
     <div ref={wrapperRef} className={classes.root}>
       <ListItem
         button
-        onDoubleClick={handleDoubleClick}
+        onDoubleClick={ itemId ? handleDoubleClick : console.log('lulz') }
         selected={noteId === itemId}
         onClick={(event) => handleListItemClick(event, itemId)}
       >

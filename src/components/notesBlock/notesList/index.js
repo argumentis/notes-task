@@ -29,10 +29,9 @@ const mapStateToProps = store => {
 
 function SelectedListItemNotes (props) {
   const classes = useStyles()
-  const { notesList, folderId, currFolderId } = props
+  const { notesList, folderId } = props
   const uniqid = require('uniqid')
-  const filterRules = !currFolderId ? folderId : currFolderId
-  const init = _.filter(notesList, function (item) { return item.folderId === filterRules })
+  const init = _.filter(notesList, function (item) { return item.folderId === folderId })
 
   return (
     <div className={classes.root}>
