@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import TextField from '@material-ui/core/TextField'
@@ -13,6 +13,7 @@ import { setNoteId } from '../../../reducersFolder/notesReducer'
 import NotesListMobile from '../../notesBlock/notesList/mobileVersionFiles/notesListMobile'
 import Hidden from '@material-ui/core/Hidden'
 import ButtonsBlockNotesMobil from './mobileVersionFiles/buttonsBlock'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,8 @@ function FolderItem (props, event) {
   const { foldersList, folderId, setFolderIdAction, setFolderAction, itemId, itemName, itemStatus, setNoteIdAction, noteId } = props
   const wrapperRef = useRef(null)
   const [contextMenu, setContextMenu] = useState(initialState)
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('md'))
 
   // func for change status input when click outside folder item
   function useOutsideClose (ref) {
@@ -92,11 +95,13 @@ function FolderItem (props, event) {
 
   // func for set coordinates context menu
   const handleDoubleClick = (event) => {
-    event.preventDefault()
-    setContextMenu({
-      mouseX: event.clientX - 2,
-      mouseY: event.clientY - 4
-    })
+    if (matches) {
+      event.preventDefault()
+      setContextMenu({
+        mouseX: event.clientX - 2,
+        mouseY: event.clientY - 4
+      })
+    }
   }
 
   // func for change value name folder onChange
