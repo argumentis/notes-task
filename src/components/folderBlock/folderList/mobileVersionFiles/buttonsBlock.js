@@ -1,30 +1,16 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setNotes, setNoteId } from '../../../../reducersFolder/notesReducer'
 import { setFolder, setFolderId } from '../../../../reducersFolder/folderReducer'
 import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
-import CreateIcon from '@material-ui/icons/Create'
-import NoteAddOutlinedIcon from '@material-ui/icons/NoteAddOutlined'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { arrRemoveFolder, changeFolder } from '../../helper'
 import { arrPusher } from '../../../notesBlock/helper'
 import _ from 'lodash'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    marginRight: '20px',
-    '& > *': {
-      marginLeft: '5px',
-      marginTop: '5px',
-      padding: '0px',
-      width: '40px',
-      height: '20px'
-    }
-  }
-}))
 
 const mapStateToProps = store => {
   const { noteId, notesList } = store.notes
@@ -48,7 +34,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 function ButtonsBlockNotesMobil (props) {
-  const classes = useStyles()
   const { notesList, currId, setNotesAction, foldersList, setFolderAction, setFolderIdAction } = props
 
   // func for change folder name
@@ -59,8 +44,8 @@ function ButtonsBlockNotesMobil (props) {
 
   // func for add new notes from folder
   const addNoteButton = () => {
+    const newData = _.cloneDeep(notesList)
     if (currId !== 0) {
-      const newData = _.cloneDeep(notesList)
       setNotesAction(arrPusher(newData, currId))
     }
   }
@@ -74,17 +59,20 @@ function ButtonsBlockNotesMobil (props) {
   }
 
   return (
-    <div className={classes.root}>
-      <IconButton aria-label='Rename Folder' onClick={renameFolderButton}>
-        <CreateIcon />
-      </IconButton>
-      <IconButton aria-label='Add note' onClick={addNoteButton}>
-        <NoteAddOutlinedIcon />
-      </IconButton>
-      <IconButton aria-label='Delete folder' onClick={removeFolder}>
-        <CloseIcon />
-      </IconButton>
-    </div>
+    <PopupState variant="popover" popupId="demo-popup-menu">
+      {(popupState) => (
+        <React.Fragment>
+          <IconButton {...bindTrigger(popupState)}>
+            <MoreHorizIcon />
+          </IconButton>
+          <Menu {...bindMenu(popupState)}>
+            <MenuItem onClick={addNoteButton}>Add Note</MenuItem>
+            <MenuItem onClick={renameFolderButton}>Rename Folder</MenuItem>
+            <MenuItem onClick={removeFolder}>Remove Folder</MenuItem>
+          </Menu>
+        </React.Fragment>
+      )}
+    </PopupState>
   )
 }
 

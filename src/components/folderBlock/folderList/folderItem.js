@@ -10,15 +10,14 @@ import ContextMenu from './contextMenu'
 import { connect } from 'react-redux'
 import { setFolder, setFolderId } from '../../../reducersFolder/folderReducer'
 import { setNoteId } from '../../../reducersFolder/notesReducer'
-import NotesListMobile from '../../notesBlock/notesList/mobileVersionFiles/folderListMobile'
+import NotesListMobile from '../../notesBlock/notesList/mobileVersionFiles/notesListMobile'
 import Hidden from '@material-ui/core/Hidden'
 import ButtonsBlockNotesMobil from './mobileVersionFiles/buttonsBlock'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiListItem-root': {
-      height: '20px',
-      padding: '15px 0px 15px 15px',
+      height: '40px',
       [theme.breakpoints.down('sm')]: {
         backgroundColor: '#cccccc',
         height: '60px'
@@ -26,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   rootInput: {
+    display: 'flex',
     '& .Mui-focused': {
-      backgroundColor: '#75c1ff'
+      backgroundColor: '#f7f6f7'
     },
     '& .Mui-disabled': {
-      color: 'black',
-      backgroundColor: 'none'
+      color: 'black'
     }
   }
 }))

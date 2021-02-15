@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       height: '95vh',
       flexDirection: 'column',
-      justifyContent: 'space-between',
       backgroundColor: '#f7f6f7'
     }
   }
