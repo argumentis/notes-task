@@ -9,9 +9,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
     width: '100%',
-    height: '100%',
-    backgroundColor: '#f7f6f7',
-    overflow: 'auto'
+    height: '90%',
+    backgroundColor: '#f7f6f7'
   },
   button: {
     width: '100%',
