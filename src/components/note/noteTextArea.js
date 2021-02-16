@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
     resize: 'none',
     outline: 'none',
     backgroundColor: '#f7f6f7',
-    marginTop: '20px'
+    marginTop: '20px',
+    [theme.breakpoints.down('sm')]: {
+      height: '80vh'
+    }
   }
 }))
 

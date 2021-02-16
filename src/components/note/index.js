@@ -15,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       height: '95vh',
       flexDirection: 'column',
-      backgroundColor: '#f7f6f7',
-      [theme.breakpoints.down('sm')]: {
-        height: '90vh'
-      }
+      backgroundColor: '#f7f6f7'
     }
   }
 }))

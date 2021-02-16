@@ -14,7 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: '100%',
-    height: '40px'
+    color: '#bababa',
+    height: '30px',
+    textTransform: 'none'
   }
 }))
 
@@ -33,8 +35,8 @@ export default function NotesModal (props) {
         onClose={setOpen}
       >
         <div className={classes.root}>
-            <NoteText/>
-            <Button className={classes.button} onClick={handleClose}>Save and Close</Button>
+          <Button className={classes.button} onClick={handleClose}>Save and Close</Button>
+          <NoteText/>
         </div>
       </Modal>
     </div>
